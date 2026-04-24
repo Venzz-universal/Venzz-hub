@@ -1,0 +1,45 @@
+local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua" .. "?v=" .. tick()))()
+
+local Window = WindUI:CreateWindow({
+    Title = "Venzz Hub",
+    Folder = "VenzzHub",
+    Icon = "rbxassetid://72148305285918",
+    Background = "rbxassetid://72148305285918",
+    HideSearchBar = false,
+    OpenButton = { Title = "Venzz Hub", Enabled = true, Draggable = true, Scale = 0.5 },
+})
+
+-- TAB: HOME
+local HomeTab = Window:Tab({ Title = "Home", Icon = "rbxassetid://77403645809985", Border = true })
+HomeTab:Button({
+    Title = "Copy Discord Link",
+    Callback = function()
+        setclipboard("https://discord.gg/Vn2Zg7ZvV")
+        WindUI:Notify({Title = "Venzz Hub", Content = "Discord link copied!"})
+    end,
+})
+
+-- TAB: SCRIPTS
+local ScriptTab = Window:Tab({ Title = "Script Hub", Icon = "rbxassetid://77403645809985", Border = true })
+ScriptTab:Button({
+    Title = "Execute Game Script",
+    Color = Color3.fromHex("#a2ff30"),
+    Callback = function()
+        local CurrentID = game.PlaceId
+        if CurrentID == 142823291 then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/script-9209/roblox/refs/heads/main/mm2-keyless-auto"))()
+        elseif CurrentID == 93978595733734 then
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/numerouno2/eugunewupremium/refs/heads/main/main.lua"))()
+        else
+            WindUI:Notify({Title = "Venzz Hub", Content = "Script tidak ditemukan untuk ID: " .. CurrentID})
+        end
+    end,
+})
+
+-- TAB: SETTINGS
+local SettingsTab = Window:Tab({ Title = "Settings", Icon = "rbxassetid://79462817985070", Border = true })
+SettingsTab:Button({
+    Title = "Destroy UI",
+    Color = Color3.fromHex("#ff4830"),
+    Callback = function() Window:Destroy() end,
+})
