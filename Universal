@@ -4,10 +4,22 @@ local Window = WindUI:CreateWindow({
     Title = "Venzz Hub",
     Folder = "VenzzHub",
     Icon = "rbxassetid://72148305285918",
-    Background = "rbxassetid://72148305285918",
     HideSearchBar = false,
     OpenButton = { Title = "Venzz Hub", Enabled = true, Draggable = true, Scale = 0.5 },
 })
+
+-- LOGIKA BACKGROUND (Agar gambar muncul di area hitam/isi konten)
+task.spawn(function()
+    repeat task.wait() until Window.GUI
+    local BG = Instance.new("ImageLabel", Window.GUI)
+    BG.Name = "CustomBackground"
+    BG.Image = "rbxassetid://72148305285918"
+    BG.Size = UDim2.new(1, 0, 1, 0)
+    BG.Position = UDim2.new(0, 0, 0, 0)
+    BG.ZIndex = 0 -- Biar ada di paling belakang
+    BG.ScaleType = Enum.ScaleType.Stretch
+    BG.BackgroundTransparency = 1
+end)
 
 -- TAB: HOME
 local HomeTab = Window:Tab({ Title = "Home", Icon = "rbxassetid://77403645809985", Border = true })
@@ -19,7 +31,7 @@ HomeTab:Button({
     end,
 })
 
--- TAB: SCRIPTS
+-- TAB: SCRIPT HUB
 local ScriptTab = Window:Tab({ Title = "Script Hub", Icon = "rbxassetid://77403645809985", Border = true })
 ScriptTab:Button({
     Title = "Execute Game Script",
@@ -31,7 +43,7 @@ ScriptTab:Button({
         elseif CurrentID == 93978595733734 then
             loadstring(game:HttpGet("https://raw.githubusercontent.com/numerouno2/eugunewupremium/refs/heads/main/main.lua"))()
         else
-            WindUI:Notify({Title = "Venzz Hub", Content = "Script tidak ditemukan untuk ID: " .. CurrentID})
+            WindUI:Notify({Title = "Venzz Hub", Content = "No script for ID: " .. CurrentID})
         end
     end,
 })
