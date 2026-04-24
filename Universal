@@ -1,4 +1,4 @@
--- Venzz Hub Ultimate (Clean & Stable)
+-- Venzz Hub Ultimate (Final Stable Version)
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua" .. "?v=" .. tick()))()
 
 local Window = WindUI:CreateWindow({
@@ -12,65 +12,29 @@ local Window = WindUI:CreateWindow({
 local HomeTab = Window:Tab({ Title = "Home" })
 HomeTab:Button({ Title = "Copy Discord Link", Callback = function() setclipboard("https://discord.gg/Vn2Zg7ZvV") end })
 
-HomeTab:Label({ Title = "Credits & Disclaimer:" })
-HomeTab:Label({ Title = "All scripts featured in this hub are not my own creation. I am only providing the credits to the original developers." })
-HomeTab:Label({ Title = "Semua script yg ada di sini bukan buatan ku yah, aku cuma kasih credit." })
-
 -- TAB: TROLL TOOLS
 local TrollTab = Window:Tab({ Title = "Troll Tools" })
 local TargetName = ""
-TrollTab:Input({
-    Title = "Target Username",
-    Placeholder = "Ketik username target...",
-    Callback = function(v) TargetName = v end,
-})
-TrollTab:Button({
-    Title = "Explode Target (FE)",
-    Color = Color3.fromHex("#ff0000"),
-    Callback = function()
-        local t = game.Players:FindFirstChild(TargetName)
-        if t and t.Character then
-            local exp = Instance.new("Explosion", t.Character)
-            exp.Position = t.Character.HumanoidRootPart.Position
-        end
-    end,
-})
+TrollTab:Input({ Title = "Target Username", Placeholder = "Ketik username...", Callback = function(v) TargetName = v end })
+TrollTab:Button({ Title = "Explode Target (FE)", Color = Color3.fromHex("#ff0000"), Callback = function() local t = game.Players:FindFirstChild(TargetName) if t and t.Character then local exp = Instance.new("Explosion", t.Character) exp.Position = t.Character.HumanoidRootPart.Position end end })
 
 -- TAB: UNIVERSAL TOOLS
 local UniTab = Window:Tab({ Title = "Universal Tools" })
-local flying = false
-UniTab:Toggle({
-    Title = "Fly (E to Toggle)",
-    Callback = function(state)
-        flying = state
-        local lp = game.Players.LocalPlayer
-        if flying then
-            local bv = Instance.new("BodyVelocity", lp.Character.HumanoidRootPart)
-            bv.Name = "FlyVelocity"
-            bv.MaxForce = Vector3.new(1, 1, 1) * 1e6
-            bv.Velocity = Vector3.new(0, 0, 0)
-            game:GetService("RunService").RenderStepped:Connect(function()
-                if flying then bv.Velocity = (game.Workspace.CurrentCamera.CFrame.LookVector * 50) end
-            end)
-        else
-            if lp.Character.HumanoidRootPart:FindFirstChild("FlyVelocity") then
-                lp.Character.HumanoidRootPart.FlyVelocity:Destroy()
-            end
-        end
-    end,
-})
+UniTab:Button({ Title = "Fly V2", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Flyv2-30617"))() end })
 UniTab:Toggle({ Title = "NoClip", Callback = function(state) game:GetService("RunService").RenderStepped:Connect(function() if state and game.Players.LocalPlayer.Character then for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end end end) end })
 
 -- TAB: SCRIPT HUB
 local ScriptTab = Window:Tab({ Title = "Script Hub" })
 ScriptTab:Button({ Title = "Steal a Brainrot", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/irishhub-scriptzzz/Irish-hub-free-lagger/refs/heads/main/Irish%20Hub%20Free%20Lagger"))() end })
 ScriptTab:Button({ Title = "Sambung Kata", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/rush-xyz/Sambung-Kata/refs/heads/main/script"))() end })
+ScriptTab:Button({ Title = "FE Emote Script", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-7yd7-I-Emote-Script-48024"))() end })
 
 -- TAB: GAMES
 local ListTab = Window:Tab({ Title = "Games" })
 ListTab:Button({ Title = "MM2 Script", Callback = function() loadstring(game:HttpGet("https://raw.githubusercontent.com/script-9209/roblox/refs/heads/main/mm2-keyless-auto"))() end })
+ListTab:Button({ Title = "Violence District", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/numerouno2/eugunewupremium/refs/heads/main/main.lua"))() end })
 ListTab:Button({ Title = "Blade Ball", Callback = function() loadstring(game:HttpGet("https://rawscripts.net/raw/NEW-Blade-Ball-Aim-Trainer-SP-Hub-New-Uptade-33836"))() end })
 
 -- TAB: SETTINGS
-local SettingsTab = Window:Tab({ Title = "Settings" })
+SettingsTab = Window:Tab({ Title = "Settings" })
 SettingsTab:Button({ Title = "Destroy UI", Callback = function() Window:Destroy() end })
