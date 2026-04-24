@@ -1,28 +1,15 @@
+-- Venzz Hub Full Clean (No Icons)
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua" .. "?v=" .. tick()))()
 
 local Window = WindUI:CreateWindow({
     Title = "Venzz Hub",
     Folder = "VenzzHub",
-    Icon = "rbxassetid://72148305285918",
     HideSearchBar = false,
     OpenButton = { Title = "Venzz Hub", Enabled = true, Draggable = true, Scale = 0.5 },
 })
 
--- LOGIKA BACKGROUND (Agar gambar muncul di area hitam/isi konten)
-task.spawn(function()
-    repeat task.wait() until Window.GUI
-    local BG = Instance.new("ImageLabel", Window.GUI)
-    BG.Name = "CustomBackground"
-    BG.Image = "rbxassetid://72148305285918"
-    BG.Size = UDim2.new(1, 0, 1, 0)
-    BG.Position = UDim2.new(0, 0, 0, 0)
-    BG.ZIndex = 0 -- Biar ada di paling belakang
-    BG.ScaleType = Enum.ScaleType.Stretch
-    BG.BackgroundTransparency = 1
-end)
-
 -- TAB: HOME
-local HomeTab = Window:Tab({ Title = "Home", Icon = "rbxassetid://77403645809985", Border = true })
+local HomeTab = Window:Tab({ Title = "Home" })
 HomeTab:Button({
     Title = "Copy Discord Link",
     Callback = function()
@@ -31,10 +18,42 @@ HomeTab:Button({
     end,
 })
 
+-- TAB: FEATURES
+local FeatTab = Window:Tab({ Title = "Features" })
+FeatTab:Toggle({
+    Title = "Enable Custom Script",
+    Callback = function(state)
+        if state then
+            _G.ScriptLoaded = loadstring(game:HttpGet("https://pastefy.app/qEKYpfj0/raw"))()
+            WindUI:Notify({Title = "Venzz Hub", Content = "Script Aktif!"})
+        else
+            WindUI:Notify({Title = "Venzz Hub", Content = "Script dinonaktifkan"})
+        end
+    end,
+})
+
 -- TAB: SCRIPT HUB
-local ScriptTab = Window:Tab({ Title = "Script Hub", Icon = "rbxassetid://77403645809985", Border = true })
+local ScriptTab = Window:Tab({ Title = "Script Hub" })
+
 ScriptTab:Button({
-    Title = "Execute Game Script",
+    Title = "time bomb script clasic",
+    Color = Color3.fromHex("#30a2ff"),
+    Callback = function()
+        local lp = game.Players.LocalPlayer
+        local target = nil
+        local dist = math.huge
+        for _, v in pairs(game.Players:GetPlayers()) do
+            if v ~= lp and v.Character and v.Character:FindFirstChild("HumanoidRootPart") then
+                local mag = (v.Character.HumanoidRootPart.Position - lp.Character.HumanoidRootPart.Position).Magnitude
+                if mag < dist then target = v.Character.HumanoidRootPart; dist = mag end
+            end
+        end
+        if target then lp.Character.HumanoidRootPart.CFrame = target.CFrame * CFrame.new(0, 0, 3) end
+    end,
+})
+
+ScriptTab:Button({
+    Title = "dua script",
     Color = Color3.fromHex("#a2ff30"),
     Callback = function()
         local CurrentID = game.PlaceId
@@ -49,7 +68,7 @@ ScriptTab:Button({
 })
 
 -- TAB: SETTINGS
-local SettingsTab = Window:Tab({ Title = "Settings", Icon = "rbxassetid://79462817985070", Border = true })
+local SettingsTab = Window:Tab({ Title = "Settings" })
 SettingsTab:Button({
     Title = "Destroy UI",
     Color = Color3.fromHex("#ff4830"),
